@@ -1,7 +1,23 @@
 {
   "compilerOptions": {
+    "target": "ESNext",            // Use latest ECMAScript features
+    "module": "ESNext",            // Use ESNext module resolution
+    "strict": true,                 // Enable strict mode for better type safety
+    "baseUrl": "./",                // Base directory for module resolution
     "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
+      "@/*": ["./src/*"]            // Alias for cleaner imports
+    },
+    "allowJs": true,                // Allow JS files in TS projects
+    "checkJs": false,               // Skip type-checking JS files
+    "jsx": "preserve",              // Preserve JSX for React
+    "moduleResolution": "node",     // Use Node.js module resolution
+    "resolveJsonModule": true,      // Allow importing JSON files
+    "isolatedModules": true,        // Improve build performance
+    "forceConsistentCasingInFileNames": true, // Enforce case-sensitive imports
+    "skipLibCheck": true,           // Speed up build by skipping type checks in node_modules
+    "noEmit": true,                 // Prevent outputting compiled files
+    "incremental": true             // Enable faster incremental builds
+  },
+  "exclude": ["node_modules", "dist"],  // Ignore these folders
+  "include": ["src/**/*"]               // Apply settings to all source files
 }
