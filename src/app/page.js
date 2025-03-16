@@ -1,103 +1,95 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { Box, Typography } from "@mui/material";
+import Sidebar from "./components/Sidebar";
+import RotatingCube from "./components/RotatingCube";
+import styled from "styled-components";
+
+export default function Page() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <Box sx={layoutStyle}>
+      <Sidebar />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      {/* Large Rotating Cube */}
+      <CubeWrapper>
+        <RotatingCube large={true} />
+      </CubeWrapper>
+
+      {/* Home Section */}
+      <Section id="home" $bgType="image">
+        <Typography variant="h3" sx={sectionTitleStyle}>
+          🏠 Home
+        </Typography>
+        <Typography sx={sectionContentStyle}>Welcome to CodeHive</Typography>
+      </Section>
+    </Box>
   );
 }
+
+// Layout Styling
+const layoutStyle = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  minHeight: "100vh",
+  overflowX: "hidden",
+  paddingLeft: "100px",
+  backgroundColor: "#000",
+  position: "relative",
+};
+
+// Large Cube Positioned Over Background
+const CubeWrapper = styled.div`
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 400px;
+  z-index: 3;
+
+  & > * {
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 768px) {
+    width: 300px;
+    height: 300px;
+    top: 7%;
+  }
+`;
+
+// Full-Height Section with Dynamic Background
+const Section = styled.div`
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+
+  background: ${({ $bgType }) =>
+    $bgType === "image"
+      ? "url('/background.jpg') center/cover no-repeat"
+      : "#fff"};
+`;
+
+// Section Title Styling
+const sectionTitleStyle = {
+  color: "#00eaff",
+  fontWeight: "bold",
+  marginBottom: "10px",
+  textShadow: "0px 0px 12px rgba(0, 234, 255, 1)",
+};
+
+// Section Content Styling
+const sectionContentStyle = {
+  color: "#ddd",
+  maxWidth: "600px",
+  textShadow: "0px 0px 5px rgba(255, 255, 255, 0.3)",
+};
+
